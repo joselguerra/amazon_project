@@ -1,0 +1,36 @@
+<h1>This is the Product Show Page</h1>
+
+<h1><%= @product.title %></h1>
+<p><%= @product.description %></p>
+<p><%= number_to_currency(@product.price) %></p>
+<p><strong>Category:</strong> <%= @product.category&.name %></p>
+<p><strong>User:</strong> <%= @product.user&.full_name %></p>
+
+<% if user_signed_in? %>
+<%= link_to 'Edit', edit_product_path(@product) %>
+
+<%= link_to 'Delete', product_path(@product),method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<h2>Reviews</h2>
+
+<% if user_signed_in? %>
+<%= @review.errors.full_messages.join(', ') %>
+<%= form_for [@product, @review] do |f| %>
+  <%= f.text_area :body %>
+  <%= f.text_area :rating %>
+  <%= f.submit %>
+ <% end %>
+<% end %>
+
+<% @reviews&.each do |review| %>
+  <div>
+    <span><%= review.body %></span> <span><%= review.rating %></span>
+    <%= link_to 'ð',
+      [@product, review],
+      method: :delete,
+      data: { confirm: 'Are you sure?'}
+      %>
+    <hr />
+  </div>
+<% end %>

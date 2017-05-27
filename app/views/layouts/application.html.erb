@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AmazonProject</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+
+      <%= link_to('Home', home_path) %>
+        |
+      <%= link_to('New Product', new_product_path) %>
+        |
+      <%= link_to('All Products', all_products_path) %>
+        |
+      <%= link_to('Contact Us', contact_url) %>
+      <% if user_signed_in? %>
+      Hello <%= current_user.first_name %>,
+      <%= link_to 'Sign out', sessions_path, method: :delete %>
+    <% else %>
+      |
+      <%= link_to 'Sign in', new_session_path %>
+      |
+      <%= link_to 'Sign Up', new_user_path %>
+    <% end %>
+    <!-- <a href='/contact'>Contact Us</a> -->
+  
+
+    <% if flash[:notice] %>
+      <div class='alert alert-success'><%= flash[:notice] %></div>
+    <% elsif flash[:alert] %>
+      <div class='alert alert-danger'><%= flash[:alert] %></div>
+    <% end %>
+        |
+      <%= link_to('About', about_url) %>
+
+      <hr>
+
+    <%= yield %>
+  </body>
+</html>
